@@ -85,6 +85,8 @@
     border-top: 0 none;
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
+    border-bottom-buttom-radius: 12px;
+    border-bottom-top-radius: 12px;
     overflow: hidden;
 }
 
@@ -93,7 +95,7 @@
 
     &:before, &:after {
         display: none !important;
-    } 
+    }
 
     code {
         border-left: 0 none !important;

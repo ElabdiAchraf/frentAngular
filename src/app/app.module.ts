@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRouting } from './app.routing';
 
 import { AccordionModule } from 'primeng/accordion';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -87,15 +87,15 @@ import { TreeSelectModule } from 'primeng/treeselect';
 import { TreeTableModule } from 'primeng/treetable';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { BlockViewer } from './components/blockviewer/blockviewer.component';
- 
+
 import { AppCodeModule } from './components/app-code/app.code.component';
 import { AppComponent } from './app.component';
 import { AppMainComponent } from './app.main.component';
-import { AppTopBarComponent } from './app.topbar.component';
-import { AppFooterComponent } from './app.footer.component';
+import { AppTopBarComponent } from './shared/navbar/app.topbar.component';
+import { AppFooterComponent } from './shared/footer/app.footer.component';
 import { AppConfigComponent } from './app.config.component';
-import { AppMenuComponent } from './app.menu.component';
-import { AppMenuitemComponent } from './app.menuitem.component';
+import { AppMenuComponent } from './shared/menu/app.menu.component';
+import { AppMenuitemComponent } from './shared/menu/app.menuitem.component';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FormLayoutComponent } from './components/formlayout/formlayout.component';
@@ -134,12 +134,15 @@ import { PhotoService } from './service/photoservice';
 import { ProductService } from './service/productservice';
 import { MenuService } from './service/app.menu.service';
 import { ConfigService } from './service/app.config.service';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
-        AppRoutingModule,
+        AppRouting,
         HttpClientModule,
         BrowserAnimationsModule,
         AccordionModule,
@@ -223,6 +226,8 @@ import { ConfigService } from './service/app.config.service';
         TreeTableModule,
         VirtualScrollerModule,
         AppCodeModule,
+        HttpClientModule
+
     ],
     declarations: [
         AppComponent,
@@ -261,6 +266,9 @@ import { ConfigService } from './service/app.config.service';
         ConfirmationComponent,
         PersonalComponent,
         SeatComponent,
+        LoginComponent,
+        RegisterComponent,
+
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
