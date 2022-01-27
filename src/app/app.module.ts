@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -134,14 +134,19 @@ import { PhotoService } from './service/photoservice';
 import { ProductService } from './service/productservice';
 import { MenuService } from './service/app.menu.service';
 import { ConfigService } from './service/app.config.service';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './main_components/login/login.component';
+import {HttpIntercepterBaseAuthService} from "./service/security/http-intercepter-base-auth-service.service";
+import {CookieService} from "ngx-cookie-service";
+import {RegisterComponent} from "./main_components/register/register.component";
+import { ActiveComponent } from './main_components/active/active.component';
+
 
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
+        ReactiveFormsModule,
         AppRouting,
         HttpClientModule,
         BrowserAnimationsModule,
@@ -268,12 +273,16 @@ import { RegisterComponent } from './register/register.component';
         SeatComponent,
         LoginComponent,
         RegisterComponent,
+        ActiveComponent
+
 
     ],
     providers: [
-        {provide: LocationStrategy, useClass: HashLocationStrategy},
+
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService, MenuService, ConfigService
+        PhotoService, ProductService, MenuService, ConfigService,
+        {provide: HTTP_INTERCEPTORS,useClass: HttpIntercepterBaseAuthService,multi: true},
+        CookieService
     ],
     bootstrap: [AppComponent]
 })
