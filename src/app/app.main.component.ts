@@ -60,7 +60,7 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
         this.subscription = this.configService.configUpdate$.subscribe(config => this.config = config);
     }
 
-    ngAfterViewInit() {
+     ngAfterViewInit() {
         // hides the overlay menu and top menu if outside is clicked
         this.documentClickListener = this.renderer.listen('body', 'click', (event) => {
             if (!this.isDesktop()) {
@@ -89,7 +89,7 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
             this.menuClick = false;
             this.topMenuButtonClick = false;
         });
-    }
+     }
 
     toggleMenu(event: Event) {
         this.menuClick = true;
@@ -169,10 +169,10 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
         this.topMenuButtonClick = true;
     }
 
-    ngOnDestroy() {
+     ngOnDestroy() {
         if (this.documentClickListener) {
             this.documentClickListener();
-        }
+         }
 
 
         if (this.subscription) {

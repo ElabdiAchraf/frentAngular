@@ -1,0 +1,149 @@
+<div class="col-12">
+    <div class="card">
+        <h5>My Immobiliers</h5>
+        <p-toast></p-toast>
+        <p-table
+            [value]="Immobiliers"
+            dataKey="id"
+            [expandedRowKeys]="expandedRows"
+            responsiveLayout="scroll"
+        >
+            <ng-template pTemplate="caption">
+                <button
+                    pButton
+                    icon="pi pi-fw {{ isExpanded ? 'pi-minus' : 'pi-plus' }}"
+                    label="{{ isExpanded ? 'Collapse All' : 'Expand All' }}"
+                    (click)="expandAll()"
+                ></button>
+                <div class="flex table-header"></div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 3rem"></th>
+                    <th pSortableColumn="localisation">
+                        Localisation
+                        <p-sortIcon field="localisation"></p-sortIcon>
+                    </th>
+                    <th>Image</th>
+                    <th pSortableColumn="price">
+                        Price <p-sortIcon field="price"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="category">
+                        Category <p-sortIcon field="category"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template let-immo pTemplate="body" let-expanded="expanded">
+                <tr>
+                    <td>
+                        <button
+                            type="button"
+                            pButton
+                            pRipple
+                            [pRowToggler]="immo"
+                            class="p-button-text p-button-rounded p-button-plain"
+                            [icon]="
+                                expanded
+                                    ? 'pi pi-chevron-down'
+                                    : 'pi pi-chevron-right'
+                            "
+                        ></button>
+                    </td>
+                    <td style="min-width: 12rem">
+                        {{ immo.localisation }}
+                    </td>
+                    <td>
+                        <img
+                            src="assets/demo/images/product/black-watch.jpg"
+                            alt="image"
+                            width="100"
+                            class="shadow-4"
+                        />
+                    </td>
+                    <td style="min-width: 8rem">{{ immo.price }} DH</td>
+                    <td style="min-width: 10rem">{{ immo.category }}</td>
+                </tr>
+            </ng-template>
+            <ng-template let-immo pTemplate="rowexpansion">
+                <tr>
+                    <td colspan="7">
+                        <div class="p-3">
+                            <p-table
+                                [value]="immo.orders"
+                                dataKey="id"
+                                responsiveLayout="scroll"
+                            >
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Buyer Address</th>
+                                        <th>Price given</th>
+                                        <th style="width: 4rem"></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-order>
+                                    <tr>
+                                        <td>{{ order.id }}</td>
+                                        <td>{{ order.buyerAddress }}</td>
+                                        <td>{{ order.price }}</td>
+                                        <td>
+                                            <p-button
+                                                type="button"
+                                                label="Sell"
+                                                icon="pi pi-shopping-cart"
+                                                (click)="
+                                                    Sell(
+                                                        order.buyerAddress,
+                                                        immo.id
+                                                    )
+                                                "
+                                            ></p-button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+<p-dialog
+    [(visible)]="buy"
+    [style]="{ width: '450px' }"
+    header="Sell Immobilier"
+    [modal]="true"
+    class="p-fluid"
+>
+    <form role="form" [formGroup]="form" (submit)="changeOwnership()">
+        <img
+            src="assets/demo/images/product/black-watch.jpg"
+            alt="Immo"
+            width="150"
+            class="mt-0 mx-auto mb-5 block shadow-2"
+        />
+        <div class="field">
+            <label for="privateKey">Your Private key</label>
+            <input
+                id="privateKey"
+                formControlName="privateKey"
+                pInputText
+                required
+            />
+        </div>
+        <div>
+            <div>
+                <button
+                    pButton
+                    pRipple
+                    label="Sell"
+                    icon="pi pi-shopping-cart"
+                    class="p-button-text"
+                    type="submit"
+                ></button>
+            </div>
+        </div>
+    </form>
+</p-dialog>

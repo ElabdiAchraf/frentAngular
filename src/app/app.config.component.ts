@@ -30,7 +30,7 @@ export class AppConfigComponent implements OnInit, OnDestroy {
 
             this.applyScale();
         });
-    }
+     }
 
     onConfigButtonClick(event) {
         this.appMain.configActive = !this.appMain.configActive;
@@ -70,6 +70,6 @@ export class AppConfigComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         if (this.subscription) {
             this.subscription.unsubscribe();
-        }
+       }
     }
 }

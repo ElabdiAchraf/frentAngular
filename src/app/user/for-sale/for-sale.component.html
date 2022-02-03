@@ -1,0 +1,181 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <h5>For sale</h5>
+            <p-dataView
+                #dv
+                [value]="Immobiliers"
+                [paginator]="true"
+                [rows]="9"
+                filterBy="name"
+                [sortField]="sortField"
+                layout="grid"
+            >
+                <ng-template let-immo pTemplate="gridItem">
+                    <div class="col-12 md:col-4">
+                        <div class="card m-3 border-1 surface-border">
+                            <div
+                                class="flex align-items-center justify-content-between"
+                            >
+                                <div class="flex align-items-center">
+                                    <i class="pi pi-tag mr-2"></i>
+                                    <span class="font-semibold">{{
+                                        immo.category
+                                    }}</span>
+                                </div>
+
+                                <span
+                                    ><i class="pi pi-map-marker mr-2"></i
+                                    >{{ immo.localisation }}</span
+                                >
+                            </div>
+                            <div class="text-center my-3">
+                                <p-carousel
+                                    [value]="images"
+                                    [numVisible]="3"
+                                    [numScroll]="3"
+                                    [circular]="false"
+                                    [responsiveOptions]="
+                                        carouselResponsiveOptions
+                                    "
+                                >
+                                    <ng-template pTemplate="item" let-item>
+                                        <img
+                                            [src]="item.itemImageSrc"
+                                            style="width: 264px; display: block"
+                                            [preview]="true"
+                                        />
+                                    </ng-template>
+                                </p-carousel>
+
+                                <div class="text-2xl font-bold">
+                                    <small>{{ immo.description }} </small>
+                                </div>
+                            </div>
+                            <div
+                                class="flex align-items-center justify-content-between"
+                            >
+                                <span class="text-2xl font-semibold"
+                                    >{{ immo.price }} DH</span
+                                >
+                                <button
+                                    pButton
+                                    pRipple
+                                    label="Details"
+                                    class="p-button p-button-secondary"
+                                    icon="pi pi-bookmark"
+                                    (click)="showDetails(immo.id)"
+                                ></button>
+                                <p-button
+                                    label="Buy"
+                                    icon="pi pi-shopping-cart"
+                                    (click)="Order(immo.id)"
+                                ></p-button>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-dataView>
+        </div>
+    </div>
+</div>
+<p-dialog
+    [(visible)]="details"
+    [style]="{ width: '900px' }"
+    header="Immobilier details"
+    [modal]="true"
+    class="p-fluid"
+>
+    <p-galleria
+        [value]="images"
+        [responsiveOptions]="galleriaResponsiveOptions"
+        [containerStyle]="{ 'max-width': '800px', margin: 'auto' }"
+        [numVisible]="6"
+        [circular]="true"
+    >
+        <ng-template pTemplate="item" let-item>
+            <p-image
+                [src]="item.itemImageSrc"
+                style="width: auto; display: block"
+                [preview]="true"
+            ></p-image>
+        </ng-template>
+        <ng-template pTemplate="thumbnail" let-item>
+            <div class="grid nogutter justify-center">
+                <img [src]="item.thumbnailImageSrc" style="display: block" />
+            </div>
+        </ng-template>
+    </p-galleria>
+    <div *ngIf="immobilierdetail">
+        <div>
+            <h3>Category</h3>
+            <h4>{{ immobilierdetail.category }}</h4>
+        </div>
+        <div>
+            <h3>Description</h3>
+            <h4>{{ immobilierdetail.description }}</h4>
+        </div>
+        <div>
+            <h3>Owner Address</h3>
+            <h4>{{ immobilierdetail.ownerAddress }}</h4>
+        </div>
+        <div>
+            <h3>Owner Name</h3>
+            <h4>{{ immobilierdetail.ownerName }}</h4>
+        </div>
+        <div>
+            <h3>Price</h3>
+            <h4>{{ immobilierdetail.price }}</h4>
+        </div>
+        <div>
+            <h3>Localisation</h3>
+            <h4>{{ immobilierdetail.localisation }}</h4>
+        </div>
+        <div>
+            <h3>Creation date</h3>
+            <h4>{{ immobilierdetail.creation_date }}</h4>
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog
+    [(visible)]="buy"
+    [style]="{ width: '450px' }"
+    header="Order Immobilier"
+    [modal]="true"
+    class="p-fluid"
+>
+    <form role="form" [formGroup]="form" (submit)="OrderImmobilier()">
+        <img
+            src="assets/demo/images/product/black-watch.jpg"
+            alt="Immo"
+            width="150"
+            class="mt-0 mx-auto mb-5 block shadow-2"
+        />
+        <div class="field">
+            <label for="buyerAddress">Your account Address </label>
+            <input
+                id="buyerAddress"
+                formControlName="buyerAddress"
+                pInputText
+                required
+            />
+        </div>
+        <div class="field">
+            <label for="price">Your price</label>
+            <input id="price" formControlName="price" pInputText required />
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <button
+                    pButton
+                    pRipple
+                    label="Order"
+                    icon="pi pi-shopping-cart"
+                    class="p-button-text"
+                    type="submit"
+                ></button>
+            </div>
+        </div>
+    </form>
+</p-dialog>

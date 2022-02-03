@@ -1,3 +1,10 @@
+import { AddImmobilierComponent } from './user/add-immobilier/add-immobilier.component';
+import { MyImmobiliersComponent } from './user/my-immobiliers/my-immobiliers.component';
+import { UserProfileComponent } from './user/user-profile/user-profile.component';
+import { ApprouveAccountComponent } from './public/approuve-account/approuve-account.component';
+import { ForSaleComponent } from './user/for-sale/for-sale.component';
+import { LoginComponent } from './public/login/login.component';
+import { PublicComponent } from './public/public.component';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -23,6 +30,8 @@ import { FloatLabelComponent } from './components/floatlabel/floatlabel.componen
 import { InvalidStateComponent } from './components/invalidstate/invalidstate.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
 import { IconsComponent } from './components/icons/icons.component';
+import { RegisterComponent } from './public/register/register.component';
+import { UserComponent } from './user/user.component';
 @NgModule({
     imports: [
         RouterModule.forRoot([
@@ -51,10 +60,28 @@ import { IconsComponent } from './components/icons/icons.component';
                     {path: 'pages/empty', component: EmptyComponent},
                     {path: 'icons', component: IconsComponent},
                     {path: 'blocks', component: BlocksComponent},
-                    {path: 'documentation', component: DocumentationComponent}
+                    { path: 'documentation', component: DocumentationComponent },
+                    {
+                path: 'public', component: PublicComponent,
+                children: [
+                    {path:'login',component:LoginComponent},
+                    {path:'approuveAccount',component:ApprouveAccountComponent},
+                    {path:'register',component:RegisterComponent}
                 ]
             },
-            {path: '**', redirectTo: 'pages/empty'},
+                    {
+                path: 'user', component: UserComponent,
+                children: [
+                    {path:'forsale',component:ForSaleComponent},
+                    {path:'profile',component:UserProfileComponent},
+                    {path:'myimmobiliers',component:MyImmobiliersComponent},
+                    {path:'addimmobilier',component:AddImmobilierComponent},
+                ]
+            },
+                ]
+            },
+            
+           {path: '**', redirectTo: 'pages/empty'},
         ], {scrollPositionRestoration: 'enabled'})
     ],
     exports: [RouterModule]

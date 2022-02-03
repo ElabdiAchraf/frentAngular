@@ -16,6 +16,7 @@ export class FileComponent {
             this.uploadedFiles.push(file);
         }
 
-        this.messageService.add({severity: 'info', summary: 'Success', detail: 'File Uploaded'});
+        this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
+        console.log("UPLOADED FILES :   "+ event.files);
     }
 }

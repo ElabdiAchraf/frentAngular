@@ -1,3 +1,4 @@
+import { UserModule } from './user/user.module';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -134,6 +135,10 @@ import { PhotoService } from './service/photoservice';
 import { ProductService } from './service/productservice';
 import { MenuService } from './service/app.menu.service';
 import { ConfigService } from './service/app.config.service';
+import { AdminComponent } from './admin/admin.component';
+import { UserComponent } from './user/user.component';
+import { PublicComponent } from './public/public.component';
+import { PublicModule } from './public/public.module';
 
 @NgModule({
     imports: [
@@ -223,6 +228,8 @@ import { ConfigService } from './service/app.config.service';
         TreeTableModule,
         VirtualScrollerModule,
         AppCodeModule,
+        PublicModule,
+        UserModule
     ],
     declarations: [
         AppComponent,
@@ -261,9 +268,11 @@ import { ConfigService } from './service/app.config.service';
         ConfirmationComponent,
         PersonalComponent,
         SeatComponent,
+        AdminComponent,
+        UserComponent,
+        PublicComponent,
     ],
     providers: [
-        {provide: LocationStrategy, useClass: HashLocationStrategy},
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService, MenuService, ConfigService
     ],
