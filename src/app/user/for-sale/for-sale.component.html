@@ -12,7 +12,10 @@
                 layout="grid"
             >
                 <ng-template let-immo pTemplate="gridItem">
-                    <div class="col-12 md:col-4">
+                    <div
+                        *ngIf="immo.status == 'APPROVED'"
+                        class="col-12 md:col-4"
+                    >
                         <div class="card m-3 border-1 surface-border">
                             <div
                                 class="flex align-items-center justify-content-between"
@@ -29,9 +32,22 @@
                                     >{{ immo.localisation }}</span
                                 >
                             </div>
-                            <div class="text-center my-3">
+                            <div
+                                class="text-center my-3"
+                                *ngIf="immo.photos.length == 0"
+                            >
+                                <img
+                                    src="../assets/Images/noImage.jpg"
+                                    style="width: 264px"
+                                    [preview]="true"
+                                />
+                            </div>
+                            <div
+                                *ngIf="immo.photos.length != 0"
+                                class="text-center my-3"
+                            >
                                 <p-carousel
-                                    [value]="images"
+                                    [value]="immo.photos"
                                     [numVisible]="3"
                                     [numScroll]="3"
                                     [circular]="false"
@@ -41,7 +57,9 @@
                                 >
                                     <ng-template pTemplate="item" let-item>
                                         <img
-                                            [src]="item.itemImageSrc"
+                                            [src]="
+                                                '../assets/Images/' + item.path
+                                            "
                                             style="width: 264px; display: block"
                                             [preview]="true"
                                         />

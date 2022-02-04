@@ -1,3 +1,4 @@
+import { PhotoService } from './../../service/photoservice';
 import { immobilierdetail } from './../../api/immobilierdetail';
 import { order } from './../../api/orders';
 import { myImmobiliers } from './../../api/myImmobiliers';
@@ -7,7 +8,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ContractService } from 'src/app/service/contract.service';
-
 @Component({
   selector: 'app-my-immobiliers',
   providers: [MessageService, ConfirmationService],
@@ -15,17 +15,26 @@ import { ContractService } from 'src/app/service/contract.service';
   styleUrls: ['./my-immobiliers.component.scss']
 })
 export class MyImmobiliersComponent implements OnInit {
-
+    
   Immobiliers : myImmobiliers[];
   orders: [];
   buy: boolean = false;
+  displayImages: boolean = false;
   form: FormGroup;
   anOrder : order ;
   expandedRows = {};
   BuyerAddress;
   ImmobilierId;
+  immobilierPhotos
   isExpanded: boolean = false;
-  constructor(private route: Router,private Formbuilder:FormBuilder,private contractService : ContractService,private orderService : OrderService,private messageService: MessageService, private confirmService: ConfirmationService, private cd: ChangeDetectorRef) { }
+  carouselResponsiveOptions: any[] = [
+      {
+          breakpoint: '400px',
+          numVisible: 1,
+          numScroll: 1
+      }
+  ];
+  constructor(private route: Router, private photoService :PhotoService,private Formbuilder:FormBuilder,private contractService : ContractService,private orderService : OrderService,private messageService: MessageService, private confirmService: ConfirmationService, private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.getMyImmobilier(); 
@@ -43,6 +52,10 @@ export class MyImmobiliersComponent implements OnInit {
     this.ImmobilierId = ImmoId
     this.buy = true; 
   }
+  displayimages(ImmoId) { 
+    this.getImmobilierImages(ImmoId);
+
+  }
   getMyImmobilier() {
     this.contractService.myImmobilier().subscribe((res:any) => {
       this.Immobiliers = res;
@@ -50,7 +63,7 @@ export class MyImmobiliersComponent implements OnInit {
         this.orderService.ImmobilierOrders(Immobilier.id).subscribe((res:any) => {
       Immobilier.orders = res;     
       console.log(Immobilier.orders);
-    });
+        });
       });
       console.log(this.Immobiliers);
     });
@@ -64,6 +77,12 @@ export class MyImmobiliersComponent implements OnInit {
         }
         this.isExpanded = !this.isExpanded;
   }
+   getImmobilierImages(ImmobilierId){
+ this.photoService.getPhotosByAnncId(ImmobilierId).subscribe((res:any) => {
+      this.immobilierPhotos = res; 
+    });
+    this.displayImages = true; 
+      }
 
     changeOwnership() {
     const data = {
@@ -72,7 +91,8 @@ export class MyImmobiliersComponent implements OnInit {
       _newOwner: this.BuyerAddress
     }
 
-
+     
+     
     console.log(data);
     this.contractService.changeOnwership(data).subscribe(res => {
       console.log("Change Ownership : " + res);

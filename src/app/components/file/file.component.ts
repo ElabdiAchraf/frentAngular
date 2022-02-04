@@ -14,9 +14,9 @@ export class FileComponent {
     onUpload(event) {
         for (const file of event.files) {
             this.uploadedFiles.push(file);
+            console.log("UPLOADED FILES :   "+ file);
         }
 
         this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
-        console.log("UPLOADED FILES :   "+ event.files);
     }
 }

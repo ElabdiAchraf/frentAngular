@@ -24,13 +24,14 @@
                         Localisation
                         <p-sortIcon field="localisation"></p-sortIcon>
                     </th>
-                    <th>Image</th>
+
                     <th pSortableColumn="price">
                         Price <p-sortIcon field="price"></p-sortIcon>
                     </th>
                     <th pSortableColumn="category">
                         Category <p-sortIcon field="category"></p-sortIcon>
                     </th>
+                    <th>Images</th>
                 </tr>
             </ng-template>
 
@@ -53,16 +54,17 @@
                     <td style="min-width: 12rem">
                         {{ immo.localisation }}
                     </td>
-                    <td>
-                        <img
-                            src="assets/demo/images/product/black-watch.jpg"
-                            alt="image"
-                            width="100"
-                            class="shadow-4"
-                        />
-                    </td>
+
                     <td style="min-width: 8rem">{{ immo.price }} DH</td>
                     <td style="min-width: 10rem">{{ immo.category }}</td>
+                    <td style="min-width: 10rem">
+                        <p-button
+                            type="button"
+                            label="Display images"
+                            icon="pi pi-fw pi-image"
+                            (click)="displayimages(immo.id)"
+                        ></p-button>
+                    </td>
                 </tr>
             </ng-template>
             <ng-template let-immo pTemplate="rowexpansion">
@@ -107,6 +109,54 @@
                     </td>
                 </tr>
             </ng-template>
+            <!-- <ng-template let-immo pTemplate="rowexpansion">
+                <tr>
+                    <td colspan="7">
+                        <div class="p-3">
+                            <p-table
+                                [value]="immo.orders"
+                                dataKey="id"
+                                responsiveLayout="scroll"
+                            >
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>images</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-order>
+                                    <tr>
+                                        <td class="text-center my-3">
+                                            <p-carousel
+                                                [value]="immo.photos"
+                                                [numVisible]="1"
+                                                [numScroll]="1"
+                                                [circular]="false"
+                                                [responsiveOptions]="
+                                                    carouselResponsiveOptions
+                                                "
+                                            >
+                                                <ng-template
+                                                    pTemplate="item"
+                                                    let-item
+                                                >
+                                                    <img
+                                                        [src]="
+                                                            '../assets/Images/' +
+                                                            item.path
+                                                        "
+                                                        style="width: 150px"
+                                                        [preview]="true"
+                                                    />
+                                                </ng-template>
+                                            </p-carousel>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template> -->
         </p-table>
     </div>
 </div>
@@ -146,4 +196,29 @@
             </div>
         </div>
     </form>
+</p-dialog>
+<p-dialog
+    [(visible)]="displayImages"
+    [style]="{ width: '450px' }"
+    header="Immobilier Images"
+    [modal]="true"
+    class="p-fluid"
+>
+    <div class="text-center my-3">
+        <p-carousel
+            [value]="immobilierPhotos"
+            [numVisible]="1"
+            [numScroll]="1"
+            [circular]="false"
+            [responsiveOptions]="carouselResponsiveOptions"
+        >
+            <ng-template pTemplate="item" let-item>
+                <img
+                    [src]="'../assets/Images/' + item.path"
+                    style="width: 500px"
+                    [preview]="true"
+                />
+            </ng-template>
+        </p-carousel>
+    </div>
 </p-dialog>

@@ -66,6 +66,12 @@ export class ForSaleComponent implements OnInit {
 
     this.contractService.ImmobilierForSale().subscribe((res:any)=>{
       this.Immobiliers = res;
+      this.Immobiliers.forEach(Immobilier => {
+        this.photoService.getPhotosByAnncId(Immobilier.id).subscribe((res:any) => {
+      Immobilier.photos = res;     
+      console.log(Immobilier.photos);
+        });
+      });
       console.log(res);
     });
     this.form  = this.Formbuilder.group({

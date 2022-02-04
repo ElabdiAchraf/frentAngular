@@ -10,7 +10,7 @@
     </div>
     <form role="form" [formGroup]="form" (submit)="addImmobilier()">
         <div class="flex w-full lg:w-12">
-            <div class="mx-2 lg:w-6">
+            <div class="mx-2 lg:w-12">
                 <label for="privateKey" class="block text-900 font-medium mb-2"
                     >Your private key</label
                 >
@@ -109,25 +109,6 @@
                     class="w-full mb-3"
                     formControlName="description"
                 />
-            </div>
-            <div class="mx-2 lg:w-6">
-                <label class="block text-900 font-medium mb-2"
-                    >Import images</label
-                >
-                <p-fileUpload
-                    name="demo[]"
-                    (onUpload)="onUpload($event)"
-                    multiple="multiple"
-                    maxFileSize="1000000"
-                >
-                    <ng-template pTemplate="content">
-                        <ul *ngIf="uploadedFiles.length">
-                            <li *ngFor="let file of uploadedFiles">
-                                {{ file.name }} - {{ file.size }} bytes
-                            </li>
-                        </ul>
-                    </ng-template>
-                </p-fileUpload>
             </div>
         </div>
         <input

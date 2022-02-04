@@ -1,4 +1,5 @@
 import { order } from "./orders";
+import { photo } from "./photo";
 
 export interface myImmobiliers {
     id?:string;
@@ -10,6 +11,7 @@ export interface myImmobiliers {
     status?:string;
     ownerName?:string;
     ownerAddress?:string;
-    orders?:order[];
+    orders?: order[];
+    photos?: photo[];
 
 }

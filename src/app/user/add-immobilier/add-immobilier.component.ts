@@ -21,7 +21,6 @@ export class AddImmobilierComponent implements OnInit {
         privateKey :"",
         localisation:"",
       category: "",
-        Images:"",
         owner:"",
         _price: 0,
         _ownerAddress:"",
@@ -30,15 +29,25 @@ export class AddImmobilierComponent implements OnInit {
       });
   }
   addImmobilier() {
-    
-    console.log(this.form.value);
+    const data = {
+      privateKey: this.form.getRawValue().privateKey,
+      localisation: this.form.getRawValue().localisation,
+      category: this.form.getRawValue().category,
+      owner: this.form.getRawValue().owner,
+      _price: this.form.getRawValue()._price,
+      _ownerAddress: this.form.getRawValue()._ownerAddress,
+      description: this.form.getRawValue().description,
+      forSell: this.form.getRawValue().forSell
+    }
+
+    console.log(data);
   }
   onUpload(event) {
-        for (const file of event.files) {
+        for (const file of event.target.files) {
           this.uploadedFiles.push(file);
+          console.log(this.uploadedFiles);
         }
     this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
-    console.log("UPLOADED FILES :   "+ this.uploadedFiles.length);
     }
 
 }
