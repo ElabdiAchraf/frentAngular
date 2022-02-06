@@ -4,40 +4,15 @@
         <div class="text-500 mb-5"></div>
         <ul class="list-none p-0 m-0">
             <form role="form" [formGroup]="form" (submit)="updateProfile()">
-                <div class="text-center my-4">
-                    <!-- <img
-                        shape="circle"
-                        style="width: auto; height: 100px"
-                        [src]="'../assets/ProfilePictures/' + profile.photo"
-                    /> -->
-                    <img
-                        style="
-                            width: 120px;
-                            height: 120px;
-                            position: relative;
-                            border-radius: 50%;
-                        "
-                        [src]="'../assets/ProfilePictures/' + profile.photo"
-                        shape="circle"
-                    />
-                    <div *ngIf="isEdit">
-                        <input
-                            value="Import"
-                            type="file"
-                            [(ngModel)]="profile.photo"
-                            formControlName="photo"
-                        />
-                        <!-- <p-fileUpload
-                            mode="basic"
-                            accept="image/*"
-                            [maxFileSize]="1000000"
-                            label="Import"
-                            chooseLabel="Import"
-                            class="mr-2 inline-block"
-                        ></p-fileUpload> -->
+                <div class="flex justify-content-center">
+                    <div class="my-4" style="width: 70px">
+                        <ngx-avatar
+                            size="70"
+                            [name]="profile.firstName + ' ' + profile.lastName"
+                        ></ngx-avatar>
                     </div>
                 </div>
-                <div class="card w-7 m-auto">
+                <div class="card lg:w-7 md:w-10 m-auto">
                     <li
                         class="flex align-items-center py-3 px-2 surface-border flex-wrap"
                     >

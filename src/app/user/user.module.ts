@@ -1,4 +1,4 @@
-import { AvatarModule } from 'primeng/avatar';
+import { AvatarModule } from 'ngx-avatar';
 import { ChipsModule } from 'primeng/chips';
 import { FileUploadModule } from 'primeng/fileupload';
 import { FieldsetModule } from 'primeng/fieldset';
@@ -49,7 +49,6 @@ import { ChipModule } from 'primeng/chip';
     FormsModule,
     RouterModule,
     CarouselModule,
-    AvatarModule,
     ButtonModule,
     FieldsetModule,
     FileUploadModule,
@@ -66,6 +65,7 @@ import { ChipModule } from 'primeng/chip';
     TagModule,
     GalleriaModule,
     DataViewModule,
+    AvatarModule,
     ToggleButtonModule,
     TableModule,
     ChipsModule,

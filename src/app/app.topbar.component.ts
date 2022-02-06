@@ -17,6 +17,5 @@ export class AppTopBarComponent {
     logout() {
         this.authService.logout();
         this.router.navigateByUrl("/public/login");
-
     }
 }

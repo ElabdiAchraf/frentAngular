@@ -1,6 +1,8 @@
+import { ContractService } from './../../service/contract.service';
 import { MessageService } from 'primeng/api';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-immobilier',
@@ -12,9 +14,8 @@ export class AddImmobilierComponent implements OnInit {
 
   form: FormGroup;
   valRadio: string;
-  uploadedFiles: any[] = [];
 
-  constructor(private Formbuilder:FormBuilder,private messageService: MessageService) { }
+  constructor(private Formbuilder:FormBuilder,private contractService:ContractService,private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.form = this.Formbuilder.group({
@@ -41,13 +42,24 @@ export class AddImmobilierComponent implements OnInit {
     }
 
     console.log(data);
+    this.contractService.addImmobilier(data).subscribe(res => {
+      console.log(res);
+      Swal.fire({
+        icon: 'success',
+        title: 'Immobilier saved, Wait for approvement',
+        showConfirmButton: false,
+        timer: 3000
+      })
+    }, err => {
+      console.log(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      })
+    });
+    
+    this.form.reset();
   }
-  onUpload(event) {
-        for (const file of event.target.files) {
-          this.uploadedFiles.push(file);
-          console.log(this.uploadedFiles);
-        }
-    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
-    }
 
 }

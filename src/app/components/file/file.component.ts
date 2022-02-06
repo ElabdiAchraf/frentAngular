@@ -12,9 +12,9 @@ export class FileComponent {
     constructor(private messageService: MessageService) {}
 
     onUpload(event) {
-        for (const file of event.files) {
+        for (const file of event.target.files) {
             this.uploadedFiles.push(file);
-            console.log("UPLOADED FILES :   "+ file);
+            console.log("UPLOADED FILES :   "+ event);
         }
 
         this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });

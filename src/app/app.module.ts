@@ -1,3 +1,4 @@
+import { AdminModule } from './admin/admin.module';
 import { UserModule } from './user/user.module';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -98,7 +99,7 @@ import { AppConfigComponent } from './app.config.component';
 import { AppMenuComponent } from './app.menu.component';
 import { AppMenuitemComponent } from './app.menuitem.component';
 
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { FormLayoutComponent } from './components/formlayout/formlayout.component';
 import { FloatLabelComponent } from './components/floatlabel/floatlabel.component';
 import { InvalidStateComponent } from './components/invalidstate/invalidstate.component';
@@ -229,6 +230,7 @@ import { PublicModule } from './public/public.module';
         VirtualScrollerModule,
         AppCodeModule,
         PublicModule,
+        AdminModule,
         UserModule
     ],
     declarations: [
@@ -239,7 +241,6 @@ import { PublicModule } from './public/public.module';
         AppConfigComponent,
         AppMenuComponent,
         AppMenuitemComponent,
-        DashboardComponent,
         FormLayoutComponent,
         FloatLabelComponent,
         InvalidStateComponent,

@@ -25,4 +25,16 @@ export class ContractService {
   changeOnwership(data) {
     return this.http.post(this.host2 + "/changeOwnerShip", data, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
   }
+  addImmobilier(data) {
+    return this.http.post(this.host2 + "/addImmobillier", data, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+  }
+  approveImmobilier(data) {
+    return this.http.post(this.host2 + "/approveImmobillier", data, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+  }
+  approveChangeOwnership(data) {
+    return this.http.post(this.host2 + "/approveChangeOwnerShip", data, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+  }
+  waitingChangeImmobiliers() {
+    return this.http.get(this.host2 + "/waitingChangeImmobiliers", { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+  }
 }

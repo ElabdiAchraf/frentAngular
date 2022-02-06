@@ -31,6 +31,9 @@
                     <th pSortableColumn="category">
                         Category <p-sortIcon field="category"></p-sortIcon>
                     </th>
+                    <th pSortableColumn="status">
+                        Status <p-sortIcon field="status"></p-sortIcon>
+                    </th>
                     <th>Images</th>
                 </tr>
             </ng-template>
@@ -57,6 +60,47 @@
 
                     <td style="min-width: 8rem">{{ immo.price }} DH</td>
                     <td style="min-width: 10rem">{{ immo.category }}</td>
+
+                    <td
+                        *ngIf="immo.status == 'APPROVED'"
+                        style="min-width: 10rem"
+                    >
+                        <p-tag
+                            styleClass="mr-2"
+                            severity="success"
+                            value="APPROVED"
+                        ></p-tag>
+                    </td>
+                    <td
+                        *ngIf="immo.status == 'REJECTED'"
+                        style="min-width: 10rem"
+                    >
+                        <p-tag
+                            styleClass="mr-2"
+                            severity="danger"
+                            value="REJECTED"
+                        ></p-tag>
+                    </td>
+                    <td
+                        *ngIf="immo.status == 'WAITING_CHANGE'"
+                        style="min-width: 10rem"
+                    >
+                        <p-tag
+                            styleClass="mr-2"
+                            severity="warning"
+                            value="WAITING_CHANGE"
+                        ></p-tag>
+                    </td>
+                    <td
+                        *ngIf="immo.status == 'WAITING'"
+                        style="min-width: 10rem"
+                    >
+                        <p-tag
+                            styleClass="mr-2"
+                            severity="warning"
+                            value="WAITING"
+                        ></p-tag>
+                    </td>
                     <td style="min-width: 10rem">
                         <p-button
                             type="button"
@@ -109,54 +153,6 @@
                     </td>
                 </tr>
             </ng-template>
-            <!-- <ng-template let-immo pTemplate="rowexpansion">
-                <tr>
-                    <td colspan="7">
-                        <div class="p-3">
-                            <p-table
-                                [value]="immo.orders"
-                                dataKey="id"
-                                responsiveLayout="scroll"
-                            >
-                                <ng-template pTemplate="header">
-                                    <tr>
-                                        <th>images</th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-order>
-                                    <tr>
-                                        <td class="text-center my-3">
-                                            <p-carousel
-                                                [value]="immo.photos"
-                                                [numVisible]="1"
-                                                [numScroll]="1"
-                                                [circular]="false"
-                                                [responsiveOptions]="
-                                                    carouselResponsiveOptions
-                                                "
-                                            >
-                                                <ng-template
-                                                    pTemplate="item"
-                                                    let-item
-                                                >
-                                                    <img
-                                                        [src]="
-                                                            '../assets/Images/' +
-                                                            item.path
-                                                        "
-                                                        style="width: 150px"
-                                                        [preview]="true"
-                                                    />
-                                                </ng-template>
-                                            </p-carousel>
-                                        </td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
-                        </div>
-                    </td>
-                </tr>
-            </ng-template> -->
         </p-table>
     </div>
 </div>
@@ -199,26 +195,59 @@
 </p-dialog>
 <p-dialog
     [(visible)]="displayImages"
-    [style]="{ width: '450px' }"
     header="Immobilier Images"
     [modal]="true"
     class="p-fluid"
 >
-    <div class="text-center my-3">
+    <div *ngIf="hasPhotos" class="text-center my-3">
         <p-carousel
             [value]="immobilierPhotos"
-            [numVisible]="1"
-            [numScroll]="1"
+            [numVisible]="3"
+            [numScroll]="3"
             [circular]="false"
             [responsiveOptions]="carouselResponsiveOptions"
         >
             <ng-template pTemplate="item" let-item>
                 <img
                     [src]="'../assets/Images/' + item.path"
-                    style="width: 500px"
+                    style="width: 200px"
                     [preview]="true"
                 />
             </ng-template>
         </p-carousel>
+    </div>
+    <div *ngIf="!hasPhotos" class="text-center my-3">
+        <img
+            src="../assets/Images/noImage.jpg"
+            style="width: 200px"
+            [preview]="true"
+        />
+        <div class="mt-5">
+            <label for="images" class="form-label mb-4">Upload images</label>
+            <div class="flex justify-content-center">
+                <input
+                    (change)="selectFiles($event)"
+                    class="form-control mx-4"
+                    type="file"
+                    id="images"
+                    multiple
+                />
+            </div>
+            <div class="mt-5">
+                <ul *ngIf="selectedFiles">
+                    <li *ngFor="let file of selectedFiles">
+                        {{ file.name }} - {{ file.size }} bytes
+                    </li>
+                </ul>
+            </div>
+            <button
+                pButton
+                pRipple
+                (click)="saveImages()"
+                label="Save"
+                icon="pi pi-check"
+                class="p-button-text w-5 mt-5"
+            ></button>
+        </div>
     </div>
 </p-dialog>

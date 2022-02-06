@@ -17,6 +17,12 @@ export class DashboardComponent implements OnInit {
     constructor(private productService: ProductService) {}
 
     ngOnInit() {
+         if (!localStorage.getItem('foo')) { 
+            localStorage.setItem('foo', 'no reload') 
+            location.reload() 
+        } else {
+            localStorage.removeItem('foo') 
+        }
         this.productService.getProductsSmall().then(data => this.products = data);
           
         this.items = [

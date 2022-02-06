@@ -15,6 +15,12 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService ,private Formbuilder:FormBuilder ,private router :Router) { }
 
   ngOnInit(): void {
+     if (!localStorage.getItem('foo')) { 
+            localStorage.setItem('foo', 'no reload') 
+            location.reload() 
+        } else {
+            localStorage.removeItem('foo') 
+        }
     this.form = this.Formbuilder.group({
         username: '',
         password: ''
@@ -41,10 +47,11 @@ export class LoginComponent implements OnInit {
           let jwt = res.headers.get('Authorization');
           this.authService.saveToken(jwt);
           if (localStorage.getItem("Role") != "0") {
-            
             this.router.navigateByUrl("/user/forsale");
+            
           } else {
-            this.router.navigateByUrl("/Admin/dashboard");
+            this.router.navigateByUrl("/admin/dashboard");
+            
           }
         });
       } else {

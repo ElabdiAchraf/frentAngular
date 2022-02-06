@@ -48,8 +48,8 @@
                             >
                                 <p-carousel
                                     [value]="immo.photos"
-                                    [numVisible]="3"
-                                    [numScroll]="3"
+                                    [numVisible]="1"
+                                    [numScroll]="1"
                                     [circular]="false"
                                     [responsiveOptions]="
                                         carouselResponsiveOptions
@@ -85,7 +85,7 @@
                                     (click)="showDetails(immo.id)"
                                 ></button>
                                 <p-button
-                                    label="Buy"
+                                    label="Order"
                                     icon="pi pi-shopping-cart"
                                     (click)="Order(immo.id)"
                                 ></p-button>
@@ -99,10 +99,9 @@
 </div>
 <p-dialog
     [(visible)]="details"
-    [style]="{ width: '900px' }"
     header="Immobilier details"
     [modal]="true"
-    class="p-fluid"
+    class="p-fluid w-900 md:w-200"
 >
     <p-galleria
         [value]="images"

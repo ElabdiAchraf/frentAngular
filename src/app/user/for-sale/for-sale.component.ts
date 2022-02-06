@@ -64,6 +64,14 @@ export class ForSaleComponent implements OnInit {
 
   ngOnInit(): void {
 
+        if (!localStorage.getItem('foo')) { 
+            localStorage.setItem('foo', 'no reload') 
+            location.reload() 
+        } else {
+            localStorage.removeItem('foo') 
+        }
+
+
     this.contractService.ImmobilierForSale().subscribe((res:any)=>{
       this.Immobiliers = res;
       this.Immobiliers.forEach(Immobilier => {

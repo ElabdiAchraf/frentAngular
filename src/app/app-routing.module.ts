@@ -1,3 +1,6 @@
+import { ApproveChangeOwnershipComponent } from './admin/approve-change-ownership/approve-change-ownership.component';
+import { ApproveImmobilierComponent } from './admin/approve-immobilier/approve-immobilier.component';
+import { AdminComponent } from './admin/admin.component';
 import { AddImmobilierComponent } from './user/add-immobilier/add-immobilier.component';
 import { MyImmobiliersComponent } from './user/my-immobiliers/my-immobiliers.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
@@ -7,7 +10,7 @@ import { LoginComponent } from './public/login/login.component';
 import { PublicComponent } from './public/public.component';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { FormLayoutComponent } from './components/formlayout/formlayout.component';
 import { PanelsComponent } from './components/panels/panels.component';
 import { OverlaysComponent } from './components/overlays/overlays.component';
@@ -37,8 +40,7 @@ import { UserComponent } from './user/user.component';
         RouterModule.forRoot([
             {
                 path: '', component: AppMainComponent,
-                children: [
-                    {path: '', component: DashboardComponent},
+                children: [ 
                     {path: 'uikit/formlayout', component: FormLayoutComponent},
                     {path: 'uikit/input', component: InputComponent},
                     {path: 'uikit/floatlabel', component: FloatLabelComponent},
@@ -67,6 +69,13 @@ import { UserComponent } from './user/user.component';
                     {path:'login',component:LoginComponent},
                     {path:'approuveAccount',component:ApprouveAccountComponent},
                     {path:'register',component:RegisterComponent}
+                ]
+            },{
+                path: 'admin', component: AdminComponent,
+                children: [
+                    {path: 'dashboard', component: DashboardComponent},
+                    {path: 'approveImmobilier', component: ApproveImmobilierComponent},
+                    {path: 'approveChangeOwnership', component: ApproveChangeOwnershipComponent},
                 ]
             },
                     {
