@@ -90,6 +90,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CodeHighlighterModule } from 'primeng/codehighlighter';
 import { ApproveImmobilierComponent } from './approve-immobilier/approve-immobilier.component';
 import { ApproveChangeOwnershipComponent } from './approve-change-ownership/approve-change-ownership.component';
+import { ApprovePayementComponent } from './approve-payement/approve-payement.component';
 
 
 
@@ -98,6 +99,7 @@ import { ApproveChangeOwnershipComponent } from './approve-change-ownership/appr
     DashboardComponent,
     ApproveImmobilierComponent,
     ApproveChangeOwnershipComponent,
+    ApprovePayementComponent,
   ],
   imports: [
     CommonModule,

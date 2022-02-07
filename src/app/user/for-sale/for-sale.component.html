@@ -76,13 +76,27 @@
                                 <span class="text-2xl font-semibold"
                                     >{{ immo.price }} DH</span
                                 >
-                                <button
+                                <!-- <button
                                     pButton
                                     pRipple
                                     label="Details"
                                     class="p-button p-button-secondary"
                                     icon="pi pi-bookmark"
                                     (click)="showDetails(immo.id)"
+                                ></button> -->
+                                <button
+                                    pButton
+                                    pRipple
+                                    label="Buy"
+                                    class="p-button p-button-secondary"
+                                    icon="pi pi-bookmark"
+                                    (click)="
+                                        displayBuyModel(
+                                            immo.id,
+                                            immo.ownerAddress,
+                                            immo.price
+                                        )
+                                    "
                                 ></button>
                                 <p-button
                                     label="Order"
@@ -97,7 +111,7 @@
         </div>
     </div>
 </div>
-<p-dialog
+<!-- <p-dialog
     [(visible)]="details"
     header="Immobilier details"
     [modal]="true"
@@ -153,22 +167,16 @@
             <h4>{{ immobilierdetail.creation_date }}</h4>
         </div>
     </div>
-</p-dialog>
+</p-dialog> -->
 
 <p-dialog
-    [(visible)]="buy"
+    [(visible)]="order"
     [style]="{ width: '450px' }"
     header="Order Immobilier"
     [modal]="true"
     class="p-fluid"
 >
     <form role="form" [formGroup]="form" (submit)="OrderImmobilier()">
-        <img
-            src="assets/demo/images/product/black-watch.jpg"
-            alt="Immo"
-            width="150"
-            class="mt-0 mx-auto mb-5 block shadow-2"
-        />
         <div class="field">
             <label for="buyerAddress">Your account Address </label>
             <input
@@ -188,6 +196,46 @@
                     pButton
                     pRipple
                     label="Order"
+                    icon="pi pi-shopping-cart"
+                    class="p-button-text"
+                    type="submit"
+                ></button>
+            </div>
+        </div>
+    </form>
+</p-dialog>
+<p-dialog
+    [(visible)]="buy"
+    [style]="{ width: '450px' }"
+    header="Buy Immobilier"
+    [modal]="true"
+    class="p-fluid"
+>
+    <form role="form" [formGroup]="Buyform" (submit)="BuyImmobilier()">
+        <div class="field">
+            <label for="_newOwner">Your account Address </label>
+            <input
+                id="_newOwner"
+                formControlName="_newOwner"
+                pInputText
+                required
+            />
+        </div>
+        <div class="field">
+            <label for="privateKey">Your Private key</label>
+            <input
+                id="privateKey"
+                formControlName="privateKey"
+                pInputText
+                required
+            />
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <button
+                    pButton
+                    pRipple
+                    label="Buy"
                     icon="pi pi-shopping-cart"
                     class="p-button-text"
                     type="submit"

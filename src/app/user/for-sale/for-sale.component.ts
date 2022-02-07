@@ -1,3 +1,4 @@
+import { PayementService } from 'src/app/service/payement.service';
 import { OrderService } from './../../service/order.service';
 import { PhotoService } from './../../service/photoservice';
 import { immobilierdetail } from './../../api/immobilierdetail';
@@ -5,6 +6,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ContractService } from './../../service/contract.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-for-sale',
@@ -18,10 +20,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ForSaleComponent implements OnInit {
   Immobiliers;
+  order: boolean = false;
   buy: boolean = false;
   details: boolean = false;
   id;
+  ImmoId;
+  OldOwner;
+  Value;
   form: FormGroup;
+  Buyform: FormGroup;
   immobilierdetail:immobilierdetail ;
   sortField: string;
   images: any[];
@@ -60,7 +67,7 @@ export class ForSaleComponent implements OnInit {
           numScroll: 1
       }
   ];
-  constructor(private orderService:OrderService,private photoService: PhotoService,private route: Router,private Formbuilder:FormBuilder,private contractService : ContractService) { }
+  constructor(private orderService:OrderService,private payementService : PayementService,private photoService: PhotoService,private route: Router,private Formbuilder:FormBuilder,private contractService : ContractService) { }
 
   ngOnInit(): void {
 
@@ -87,6 +94,10 @@ export class ForSaleComponent implements OnInit {
         price: '',
         buyerAddress: ''
     });
+    this.Buyform  = this.Formbuilder.group({
+        _newOwner: '',
+        privateKey: ''
+    });
     this.photoService.getImages().then(images => {
           this.images = images;
     });
@@ -94,7 +105,7 @@ export class ForSaleComponent implements OnInit {
   }
   Order(id) { 
     this.id = id;
-    this.buy = true; 
+    this.order = true; 
   }
   showDetails(id) { 
     this.contractService.ImmobilierDetails(id).subscribe((res:any) => {
@@ -104,8 +115,54 @@ export class ForSaleComponent implements OnInit {
     this.details = true; 
   }
   hideDialog() {
-    this.buy = false;
+    this.order = false;
   }
+
+  displayBuyModel(id,Owner,price) {
+    this.buy = true;
+    this.ImmoId = id;
+    this.OldOwner = Owner;
+    this.Value = price;
+  }
+
+  BuyImmobilier() {
+    if (localStorage.getItem('token') != null) {
+      const data = {
+        _newOwner: this.Buyform.getRawValue()._newOwner,
+        paymentInput: {
+          value: this.Value,
+          privateKey: this.Buyform.getRawValue().privateKey,
+          from: this.OldOwner,
+        immoId : this.ImmoId}
+      }
+      this.payementService.buy(data).subscribe(res => {
+        console.log(res);
+        this.buy = false;
+        Swal.fire({
+        icon: 'success',
+        title: 'Wait for payement approvement',
+        showConfirmButton: false,
+        timer: 3000
+      })
+      }, err => {
+        console.log(err);
+        this.buy = false;
+        Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      })
+        
+      });
+      
+      console.log(data);
+    }
+    else {
+      this.route.navigateByUrl('/public/login')
+    }
+  }
+
+
   OrderImmobilier(){
       const data = {
       price: this.form.getRawValue().price,
@@ -115,9 +172,24 @@ export class ForSaleComponent implements OnInit {
     console.log(data);
     this.orderService.OrderImmobilier(data).subscribe(res => {
       console.log(res);
-    });
       this.hideDialog();
      this.form.reset();
+      Swal.fire({
+        icon: 'success',
+        title: 'Immobilier ordered',
+        showConfirmButton: false,
+        timer: 3000
+      })
+    }, err => {
+      console.log(err);
+      this.hideDialog();
+        Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      })
+        
+      });
     }
   onSortChange(event) {
         const value = event.value;
