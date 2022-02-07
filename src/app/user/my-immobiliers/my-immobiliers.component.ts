@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ContractService } from 'src/app/service/contract.service';
 import Swal from 'sweetalert2';
+import { PayementService } from 'src/app/service/payement.service';
 @Component({
   selector: 'app-my-immobiliers',
   providers: [MessageService, ConfirmationService],
@@ -23,16 +24,19 @@ export class MyImmobiliersComponent implements OnInit {
   buy: boolean = false;
   displayImages: boolean = false;
   form: FormGroup;
+  form2: FormGroup;
   anOrder : order ;
   expandedRows = {};
   BuyerAddress;
   ImmobilierId;
+  IdImmobilierToSell;
   imagesImmobilierId
   immobilierPhotos;
   selectedFiles;
   FilesName: string[] = [];
   hasPhotos: boolean;
   isExpanded: boolean = false;
+  SellwithAutoPayement: boolean = false;
   carouselResponsiveOptions: any[] = [
       {
           breakpoint: '1024px',
@@ -50,7 +54,7 @@ export class MyImmobiliersComponent implements OnInit {
           numScroll: 1
       }
   ];
-  constructor(private route: Router, private photoService :PhotoService,private Formbuilder:FormBuilder,private contractService : ContractService,private orderService : OrderService,private messageService: MessageService, private confirmService: ConfirmationService, private cd: ChangeDetectorRef) { }
+  constructor(private route: Router,private payementService : PayementService  ,private photoService :PhotoService,private Formbuilder:FormBuilder,private contractService : ContractService,private orderService : OrderService,private messageService: MessageService, private confirmService: ConfirmationService, private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.getMyImmobilier(); 
@@ -58,6 +62,10 @@ export class MyImmobiliersComponent implements OnInit {
         privateKey: '',
         _propId: '',
         _newOwner: ''
+    });
+    this.form2  = this.Formbuilder.group({
+        privateKey: '',
+        immoId: '',
     });
   }
     hideDialog() {
@@ -177,6 +185,70 @@ export class MyImmobiliersComponent implements OnInit {
       title: 'Immobilier saved, Wait for approvement',
       showConfirmButton: false,
       timer: 3000
+    });
+  }
+
+
+
+
+  displaySellWithAutoPayementModel(id) {
+    this.SellwithAutoPayement = true;
+    this.IdImmobilierToSell = id;
+    
+  }
+
+  
+  SellAutoPayement() {
+    const data = {
+      privateKey: this.form2.getRawValue().privateKey,
+      immoId : this.IdImmobilierToSell
+    }
+    console.log(data);
+
+    this.payementService.sell(data).subscribe(res => {
+      console.log(res);
+      this.SellwithAutoPayement = false;
+      Swal.fire({
+        icon: 'success',
+        title: 'Immobilier is in the auto-payement state',
+        showConfirmButton: false,
+        timer: 3000
+      });
+    }, err => {
+
+      console.log(err);
+      this.SellwithAutoPayement = false;
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      });
+    })
+    this.ngOnInit();
+
+  }
+  forSell(id) {
+    const data = {
+      immo_id : id
+    }
+    this.contractService.sellImmobilier(data).subscribe(res => {
+      console.log(res);
+
+      Swal.fire({
+        icon: 'success',
+        title: 'state changed',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      this.ngOnInit();
+    }, err => {
+      console.log(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      });
+      this.ngOnInit()
     });
   }
 

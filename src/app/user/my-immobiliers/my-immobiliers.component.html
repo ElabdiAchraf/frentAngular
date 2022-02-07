@@ -34,6 +34,13 @@
                     <th pSortableColumn="status">
                         Status <p-sortIcon field="status"></p-sortIcon>
                     </th>
+                    <th pSortableColumn="state">
+                        State <p-sortIcon field="state"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="forSell">
+                        toggle state <p-sortIcon field="forSell"></p-sortIcon>
+                    </th>
+
                     <th>Images</th>
                 </tr>
             </ng-template>
@@ -100,6 +107,48 @@
                             severity="warning"
                             value="WAITING"
                         ></p-tag>
+                    </td>
+                    <td style="min-width: 10rem">
+                        <p-tag
+                            *ngIf="!immo.forSell"
+                            styleClass="mr-2"
+                            severity="warning"
+                            value="NOT FOR SALE"
+                        ></p-tag>
+                        <p-tag
+                            *ngIf="immo.forSell"
+                            styleClass="mr-2"
+                            severity="success"
+                            value="FOR SALE"
+                        ></p-tag>
+                    </td>
+                    <td *ngIf="!immo.forSell" style="min-width: 10rem">
+                        <button
+                            pButton
+                            pRipple
+                            type="button"
+                            label="Sell it with Orders"
+                            class="p-button-success"
+                            (click)="forSell(immo.id)"
+                        ></button>
+                        <button
+                            pButton
+                            pRipple
+                            type="button"
+                            label="Sell with auto-payement"
+                            class="p-button-warning"
+                            (click)="displaySellWithAutoPayementModel(immo.id)"
+                        ></button>
+                    </td>
+                    <td *ngIf="immo.forSell" style="min-width: 10rem">
+                        <button
+                            pButton
+                            pRipple
+                            type="button"
+                            label="Change state"
+                            class="p-button-warning"
+                            (click)="forSell(immo.id)"
+                        ></button>
                     </td>
                     <td style="min-width: 10rem">
                         <p-button
@@ -250,4 +299,41 @@
             ></button>
         </div>
     </div>
+</p-dialog>
+<p-dialog
+    [(visible)]="SellwithAutoPayement"
+    [style]="{ width: '450px' }"
+    header="Change immobilier State with auto payement"
+    [modal]="true"
+    class="p-fluid"
+>
+    <form role="form" [formGroup]="form2" (submit)="SellAutoPayement()">
+        <img
+            src="assets/demo/images/product/black-watch.jpg"
+            alt="Immo"
+            width="150"
+            class="mt-0 mx-auto mb-5 block shadow-2"
+        />
+        <div class="field">
+            <label for="privateKey">Your Private key</label>
+            <input
+                id="privateKey"
+                formControlName="privateKey"
+                pInputText
+                required
+            />
+        </div>
+        <div>
+            <div>
+                <button
+                    pButton
+                    pRipple
+                    label="Sell"
+                    icon="pi pi-shopping-cart"
+                    class="p-button-text"
+                    type="submit"
+                ></button>
+            </div>
+        </div>
+    </form>
 </p-dialog>

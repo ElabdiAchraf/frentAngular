@@ -37,4 +37,10 @@ export class ContractService {
   waitingChangeImmobiliers() {
     return this.http.get(this.host2 + "/waitingChangeImmobiliers", { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
   }
+  waitingImmobiliers() {
+    return this.http.get(this.host2 + "/waitingImmobiliers", { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+  }
+  sellImmobilier(data) {
+    return this.http.post(this.host2 + "/sellImmobilier",data ,{ headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+  }
 }

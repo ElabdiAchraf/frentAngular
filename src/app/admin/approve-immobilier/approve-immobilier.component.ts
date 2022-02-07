@@ -38,7 +38,7 @@ export class ApproveImmobilierComponent implements OnInit {
   constructor(private contractService:ContractService,private photoService :PhotoService) { }
 
   ngOnInit(): void {
-    this.contractService.Immobiliers().subscribe(res => {
+    this.contractService.waitingImmobiliers().subscribe(res => {
       this.Immobiliers = res;
       this.Immobiliers.forEach(Immobilier => {
         this.photoService.getPhotosByAnncId(Immobilier.id).subscribe((res:any) => {

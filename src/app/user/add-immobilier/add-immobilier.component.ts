@@ -1,3 +1,4 @@
+import { PayementService } from 'src/app/service/payement.service';
 import { ContractService } from './../../service/contract.service';
 import { MessageService } from 'primeng/api';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -15,7 +16,7 @@ export class AddImmobilierComponent implements OnInit {
   form: FormGroup;
   valRadio: string;
 
-  constructor(private Formbuilder:FormBuilder,private contractService:ContractService,private messageService: MessageService) { }
+  constructor(private Formbuilder: FormBuilder,private payementService : PayementService,private contractService:ContractService,private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.form = this.Formbuilder.group({
@@ -29,7 +30,12 @@ export class AddImmobilierComponent implements OnInit {
         forSell: false
       });
   }
+
+
+
+
   addImmobilier() {
+    const privateKey = this.form.getRawValue().privateKey;
     const data = {
       privateKey: this.form.getRawValue().privateKey,
       localisation: this.form.getRawValue().localisation,
@@ -44,6 +50,12 @@ export class AddImmobilierComponent implements OnInit {
     console.log(data);
     this.contractService.addImmobilier(data).subscribe(res => {
       console.log(res);
+      const data2 = {
+        value: 5,
+        privateKey: privateKey
+      }
+      console.log(data2);
+      this.payementService.taxe(data2).subscribe(res => { console.log(res);  }, err => {console.log(err) });
       Swal.fire({
         icon: 'success',
         title: 'Immobilier saved, Wait for approvement',
