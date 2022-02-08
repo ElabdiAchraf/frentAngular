@@ -20,18 +20,26 @@ export class UserProfileComponent implements OnInit {
   constructor(private profileService : ProfileService,private formBuilder:FormBuilder,private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
-    this.profileService.myProfile().subscribe(res => { 
-        this.profile = res;
+    this.profileService.myProfile().subscribe(res => {
+      this.profile = res;
+      if (this.profile != null) {
         this.hasProfile = true
-        this.Editform = this.formBuilder.group({
-          firstName: "",
-          lastName: "",
-          photo:"",
-          address:  "",
-          phone: ""
-        }, err => {
-          console.log(err);
-          this.hasProfile = false
+      this.Editform = this.formBuilder.group({
+        firstName: "",
+        lastName: "",
+        photo: "",
+        address: "",
+        phone: ""
+      });this.hasProfile = true
+      this.Editform = this.formBuilder.group({
+        firstName: "",
+        lastName: "",
+        photo: "",
+        address: "",
+        phone: ""
+      });
+      } else {
+        this.hasProfile = false
           this.Createform = this.formBuilder.group({
           firstName: "",
           lastName: "",
@@ -40,8 +48,8 @@ export class UserProfileComponent implements OnInit {
           phone: "",
           username : ""
         });
-        });
-      console.log(this.profile)
+      }
+      console.log(this.profile);
     });
     
     
@@ -69,7 +77,7 @@ export class UserProfileComponent implements OnInit {
       photo: this.Createform.getRawValue().photo,
       username: this.Createform.getRawValue().username
     }
-    this.profileService.updateProfile(data).subscribe(res => {
+    this.profileService.createProfile(data).subscribe(res => {
       console.log(res);
     });
     this.ngOnInit();
