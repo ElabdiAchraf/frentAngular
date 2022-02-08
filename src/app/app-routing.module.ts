@@ -1,3 +1,4 @@
+import { ApprovePayementComponent } from './admin/approve-payement/approve-payement.component';
 import { ApproveChangeOwnershipComponent } from './admin/approve-change-ownership/approve-change-ownership.component';
 import { ApproveImmobilierComponent } from './admin/approve-immobilier/approve-immobilier.component';
 import { AdminComponent } from './admin/admin.component';
@@ -77,6 +78,7 @@ import { UserComponent } from './user/user.component';
                 children: [
                     {path: 'dashboard', component: DashboardComponent},
                     {path: 'approveImmobilier', component: ApproveImmobilierComponent},
+                    {path: 'approvePayement', component: ApprovePayementComponent},
                     {path: 'approveChangeOwnership', component: ApproveChangeOwnershipComponent},
                 ]
             },

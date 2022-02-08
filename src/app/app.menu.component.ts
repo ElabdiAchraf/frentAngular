@@ -26,7 +26,7 @@ export class AppMenuComponent implements OnInit {
         if (localStorage.getItem("Role") == "-1") {
             this.model = [
                 {
-                    label: 'UI Components',
+                    label: 'User',
                     items: [
                         {label: 'For Sale', icon: 'pi pi-fw pi-eye', routerLink: ['']},
                         {label: 'my immobiliers', icon: 'pi pi-fw pi-list', routerLink: ['/user/myimmobiliers']},
@@ -39,11 +39,12 @@ export class AppMenuComponent implements OnInit {
         else if (localStorage.getItem("Role") == "0") {
             this.model = [
                 {
-                    label: 'Home',
+                    label: 'Admin',
                     items:[
                         {label: 'Dashboard',icon: 'pi pi-fw pi-home', routerLink: ['/admin/dashboard']},
                         {label: 'Approve Immobilier',icon: 'pi pi-fw pi-home', routerLink: ['/admin/approveImmobilier']},
                         {label: 'Approve ownership changement',icon: 'pi pi-fw pi-home', routerLink: ['/admin/approveChangeOwnership']},
+                        {label: 'Approve payement',icon: 'pi pi-fw pi-home', routerLink: ['/admin/approvePayement']},
                     ]
                 }
             ];
@@ -52,7 +53,7 @@ export class AppMenuComponent implements OnInit {
         else {
             this.model = [
                 {
-                    label: '',
+                    label: 'Authenticate',
                     items:[
                         {label: 'Login',icon: 'pi pi-fw pi-home', routerLink: ['/public/login']},
                         {label: 'Register',icon: 'pi pi-fw pi-home', routerLink: ['/public/register']},

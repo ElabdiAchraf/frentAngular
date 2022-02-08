@@ -17,5 +17,11 @@ host2: string = "http://127.0.0.1:9999/PAYMENT-SERVICE";
   buy(data) {
     return this.http.post(this.host2 + "/buy", data, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
   }
+  refuseChange(data) {
+    return this.http.post(this.host2 + "/refuseChange", data, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+  }
+  acceptChange(data) {
+    return this.http.post(this.host2 + "/acceptChange", data, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+  }
 
 }
