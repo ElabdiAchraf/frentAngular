@@ -12,36 +12,66 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 export class UserProfileComponent implements OnInit {
 
   profile: any;
+  hasProfile: boolean = false;
   isEdit: boolean;
-  form: FormGroup;
+  Editform: FormGroup;
+  Createform: FormGroup;
   photo;
   constructor(private profileService : ProfileService,private formBuilder:FormBuilder,private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.profileService.myProfile().subscribe(res => { 
-      this.profile = res;
+        this.profile = res;
+        this.hasProfile = true
+        this.Editform = this.formBuilder.group({
+          firstName: "",
+          lastName: "",
+          photo:"",
+          address:  "",
+          phone: ""
+        }, err => {
+          console.log(err);
+          this.hasProfile = false
+          this.Createform = this.formBuilder.group({
+          firstName: "",
+          lastName: "",
+          photo:"",
+          address: "",
+          phone: "",
+          username : ""
+        });
+        });
+      console.log(this.profile)
     });
-    this.form = this.formBuilder.group({
-      firstName: "",
-      lastName: "",
-      photo:"",
-      address:  "",
-      phone: ""
-    });
+    
     
   }
   updateProfile() {
     const data = {
-      firstName: this.form.getRawValue().firstName,
-      lastName: this.form.getRawValue().lastName,
-      address: this.form.getRawValue().address,
-      phone: this.form.getRawValue().phone,
-      photo: this.form.getRawValue().photo
+      firstName: this.Editform.getRawValue().firstName,
+      lastName: this.Editform.getRawValue().lastName,
+      address: this.Editform.getRawValue().address,
+      phone: this.Editform.getRawValue().phone,
+      photo: this.Editform.getRawValue().photo
     }
     this.profileService.updateProfile(data).subscribe(res => {
       console.log(res);
     });
     this.ngOnInit();
     this.isEdit = false;
+  }
+  createProfile() {
+    const data = {
+      firstName: this.Createform.getRawValue().firstName,
+      lastName: this.Createform.getRawValue().lastName,
+      address: this.Createform.getRawValue().address,
+      phone: this.Createform.getRawValue().phone,
+      photo: this.Createform.getRawValue().photo,
+      username: this.Createform.getRawValue().username
+    }
+    this.profileService.updateProfile(data).subscribe(res => {
+      console.log(res);
+    });
+    this.ngOnInit();
   }
 }

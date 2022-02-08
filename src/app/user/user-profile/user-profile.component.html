@@ -1,122 +1,225 @@
-<div class="card surface-section px-4 py-8 md:px-6 lg:px-8">
-    <div class="surface-section">
-        <div class="font-medium text-3xl text-900 mb-3">Profile</div>
-        <div class="text-500 mb-5"></div>
-        <ul class="list-none p-0 m-0">
-            <form role="form" [formGroup]="form" (submit)="updateProfile()">
-                <div class="flex justify-content-center">
-                    <div class="my-4" style="width: 70px">
-                        <ngx-avatar
-                            size="70"
-                            [name]="profile.firstName + ' ' + profile.lastName"
-                        ></ngx-avatar>
+<div *ngIf="hasProfile">
+    <div class="card surface-section px-4 py-8 md:px-6 lg:px-8">
+        <div class="surface-section">
+            <div class="font-medium text-3xl text-900 mb-3">Profile</div>
+            <div class="text-500 mb-5"></div>
+            <ul class="list-none p-0 m-0">
+                <form
+                    role="form"
+                    [formGroup]="Editform"
+                    (submit)="updateProfile()"
+                >
+                    <div class="flex justify-content-center">
+                        <div class="my-4" style="width: 70px">
+                            <ngx-avatar
+                                size="70"
+                                [name]="
+                                    profile.firstName + ' ' + profile.lastName
+                                "
+                            ></ngx-avatar>
+                        </div>
                     </div>
-                </div>
-                <div class="card lg:w-7 md:w-10 m-auto">
-                    <li
-                        class="flex align-items-center py-3 px-2 surface-border flex-wrap"
-                    >
-                        <div class="text-500 w-6 md:w-2 font-medium">Name</div>
-                        <div
-                            *ngIf="!isEdit && profile.firstName"
-                            class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1"
+                    <div class="card lg:w-7 md:w-10 m-auto">
+                        <li
+                            class="flex align-items-center py-3 px-2 surface-border flex-wrap"
                         >
-                            {{ profile.firstName }}
-                        </div>
-                        <input
-                            type="text"
-                            class="w-full mb-3"
-                            pInputText
-                            *ngIf="isEdit"
-                            [(ngModel)]="profile.firstName"
-                            formControlName="firstName"
-                        />
-                    </li>
-                    <li
-                        class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
-                    >
-                        <div class="text-500 w-6 md:w-2 font-medium">
-                            Last Name
-                        </div>
-                        <div
-                            *ngIf="!isEdit && profile.lastName"
-                            class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1"
+                            <div class="text-500 w-6 md:w-2 font-medium">
+                                Name
+                            </div>
+                            <div
+                                *ngIf="!isEdit && profile.firstName"
+                                class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1"
+                            >
+                                {{ profile.firstName }}
+                            </div>
+                            <input
+                                type="text"
+                                class="w-full mb-3"
+                                pInputText
+                                *ngIf="isEdit"
+                                [(ngModel)]="profile.firstName"
+                                formControlName="firstName"
+                            />
+                        </li>
+                        <li
+                            class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
                         >
-                            {{ profile.lastName }}
-                        </div>
-                        <input
-                            type="text"
-                            class="w-full mb-3"
-                            pInputText
-                            *ngIf="isEdit"
-                            [(ngModel)]="profile.lastName"
-                            formControlName="lastName"
-                        />
-                    </li>
-                    <li
-                        class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
-                    >
-                        <div class="text-500 w-6 md:w-2 font-medium">
-                            Address
-                        </div>
-                        <div
-                            *ngIf="!isEdit && profile.address"
-                            class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1"
+                            <div class="text-500 w-6 md:w-2 font-medium">
+                                Last Name
+                            </div>
+                            <div
+                                *ngIf="!isEdit && profile.lastName"
+                                class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1"
+                            >
+                                {{ profile.lastName }}
+                            </div>
+                            <input
+                                type="text"
+                                class="w-full mb-3"
+                                pInputText
+                                *ngIf="isEdit"
+                                [(ngModel)]="profile.lastName"
+                                formControlName="lastName"
+                            />
+                        </li>
+                        <li
+                            class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
                         >
-                            {{ profile.address }}
-                        </div>
-                        <input
-                            type="text"
-                            class="w-full mb-3"
-                            pInputText
-                            *ngIf="isEdit"
-                            [(ngModel)]="profile.address"
-                            formControlName="address"
-                        />
-                    </li>
-                    <li
-                        class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
-                    >
-                        <div class="text-500 w-6 md:w-2 font-medium">Phone</div>
-                        <div
-                            *ngIf="!isEdit && profile.phone"
-                            class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1"
+                            <div class="text-500 w-6 md:w-2 font-medium">
+                                Address
+                            </div>
+                            <div
+                                *ngIf="!isEdit && profile.address"
+                                class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1"
+                            >
+                                {{ profile.address }}
+                            </div>
+                            <input
+                                type="text"
+                                class="w-full mb-3"
+                                pInputText
+                                *ngIf="isEdit"
+                                [(ngModel)]="profile.address"
+                                formControlName="address"
+                            />
+                        </li>
+                        <li
+                            class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
                         >
-                            {{ profile.phone }}
+                            <div class="text-500 w-6 md:w-2 font-medium">
+                                Phone
+                            </div>
+                            <div
+                                *ngIf="!isEdit && profile.phone"
+                                class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1"
+                            >
+                                {{ profile.phone }}
+                            </div>
+                            <input
+                                type="text"
+                                class="w-full mb-3"
+                                pInputText
+                                *ngIf="isEdit"
+                                [(ngModel)]="profile.phone"
+                                formControlName="phone"
+                            />
+                        </li>
+                        <div class="text-center mt-5">
+                            <button
+                                pButton
+                                pRipple
+                                icon="pi pi-check"
+                                type="submit"
+                                label="Save"
+                                class="p-button-text"
+                                *ngIf="isEdit"
+                            ></button>
                         </div>
-                        <input
-                            type="text"
-                            class="w-full mb-3"
-                            pInputText
-                            *ngIf="isEdit"
-                            [(ngModel)]="profile.phone"
-                            formControlName="phone"
-                        />
-                    </li>
-                    <div class="text-center mt-5">
-                        <button
-                            pButton
-                            pRipple
-                            icon="pi pi-check"
-                            type="submit"
-                            label="Save"
-                            class="p-button-text"
-                            *ngIf="isEdit"
-                        ></button>
                     </div>
-                </div>
-            </form>
-        </ul>
+                </form>
+            </ul>
+        </div>
+        <div class="text-center mt-5">
+            <button
+                *ngIf="!isEdit"
+                pButton
+                pRipple
+                label="Edit"
+                (click)="isEdit = true"
+                icon="pi pi-pencil"
+                class="p-button-text"
+            ></button>
+        </div>
     </div>
-    <div class="text-center mt-5">
-        <button
-            *ngIf="!isEdit"
-            pButton
-            pRipple
-            label="Edit"
-            (click)="isEdit = true"
-            icon="pi pi-pencil"
-            class="p-button-text"
-        ></button>
+</div>
+<div *ngIf="!hasProfile">
+    <div class="surface-card mx-auto p-4 shadow-2 border-round lg:w-7">
+        <div class="text-center mb-5">
+            <img
+                src="assets/demo/images/blocks/logos/hyper.svg"
+                alt="Image"
+                height="50"
+                class="mb-3"
+            />
+            <div class="text-900 text-3xl font-medium mb-3">
+                Create Your Profile
+            </div>
+        </div>
+        <form role="form" [formGroup]="Createform" (submit)="createProfile()">
+            <div class="w-full">
+                <div class="mx-2">
+                    <label
+                        for="privateKey"
+                        class="block text-900 font-medium mb-2"
+                        >First Name</label
+                    >
+                    <input
+                        id="firstName"
+                        type="text"
+                        pInputText
+                        class="w-full mb-3"
+                        formControlName="firstName"
+                    />
+
+                    <label
+                        for="Localisation"
+                        class="block text-900 font-medium mb-2"
+                        >Last Name</label
+                    >
+                    <input
+                        id="lastName"
+                        type="text"
+                        pInputText
+                        class="w-full mb-3"
+                        formControlName="lastName"
+                    />
+                    <label
+                        for="Category"
+                        class="block text-900 font-medium mb-2"
+                        >Account Address</label
+                    >
+                    <input
+                        id="address"
+                        type="text"
+                        pInputText
+                        class="w-full mb-3"
+                        formControlName="address"
+                    />
+
+                    <label for="price" class="block text-900 font-medium mb-2"
+                        >Phone</label
+                    >
+                    <input
+                        id="phone"
+                        type="text"
+                        pInputText
+                        class="w-full mb-3"
+                        formControlName="phone"
+                    />
+                    <label
+                        for="username"
+                        class="block text-900 font-medium mb-2"
+                        >Username</label
+                    >
+                    <input
+                        id="username"
+                        type="text"
+                        pInputText
+                        class="w-full mb-3"
+                        formControlName="username"
+                    />
+                </div>
+            </div>
+            <div class="flex justify-content-center">
+                <button
+                    pButton
+                    pRipple
+                    icon="pi pi-check"
+                    class="mr-2 mb-2"
+                    type="submit"
+                    label="Submit"
+                ></button>
+            </div>
+        </form>
     </div>
 </div>

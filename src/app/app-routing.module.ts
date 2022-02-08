@@ -41,6 +41,8 @@ import { UserComponent } from './user/user.component';
             {
                 path: '', component: AppMainComponent,
                 children: [ 
+                    
+                    {path:'',component:ForSaleComponent},
                     {path: 'uikit/formlayout', component: FormLayoutComponent},
                     {path: 'uikit/input', component: InputComponent},
                     {path: 'uikit/floatlabel', component: FloatLabelComponent},
@@ -81,7 +83,6 @@ import { UserComponent } from './user/user.component';
                     {
                 path: 'user', component: UserComponent,
                 children: [
-                    {path:'forsale',component:ForSaleComponent},
                     {path:'profile',component:UserProfileComponent},
                     {path:'myimmobiliers',component:MyImmobiliersComponent},
                     {path:'addimmobilier',component:AddImmobilierComponent},

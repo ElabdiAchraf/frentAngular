@@ -103,9 +103,13 @@ export class ForSaleComponent implements OnInit {
     });
     
   }
-  Order(id) { 
-    this.id = id;
-    this.order = true; 
+  Order(id) {
+    if (localStorage.getItem('token')) {
+      this.id = id;
+      this.order = true;
+    }  else {
+      this.route.navigateByUrl('/public/login')
+    }
   }
   showDetails(id) { 
     this.contractService.ImmobilierDetails(id).subscribe((res:any) => {
@@ -118,15 +122,19 @@ export class ForSaleComponent implements OnInit {
     this.order = false;
   }
 
-  displayBuyModel(id,Owner,price) {
-    this.buy = true;
-    this.ImmoId = id;
-    this.OldOwner = Owner;
-    this.Value = price;
+  displayBuyModel(id, Owner, price) {
+    if (localStorage.getItem('token')) {
+      this.buy = true;
+      this.ImmoId = id;
+      this.OldOwner = Owner;
+      this.Value = price;
+    }    else {
+      this.route.navigateByUrl('/public/login')
+    }
   }
 
   BuyImmobilier() {
-    if (localStorage.getItem('token') != null) {
+    if (localStorage.getItem('token')) {
       const data = {
         _newOwner: this.Buyform.getRawValue()._newOwner,
         paymentInput: {
@@ -163,7 +171,8 @@ export class ForSaleComponent implements OnInit {
   }
 
 
-  OrderImmobilier(){
+  OrderImmobilier() {
+    if (localStorage.getItem('token')) { 
       const data = {
       price: this.form.getRawValue().price,
       idImmobilier: this.id,
@@ -190,6 +199,10 @@ export class ForSaleComponent implements OnInit {
       })
         
       });
+      
+    } else {
+      this.route.navigateByUrl('/public/login')
+    }
     }
   onSortChange(event) {
         const value = event.value;

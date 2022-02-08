@@ -20,7 +20,7 @@ export class PhotoService {
     return this.http.post(this.host2+`/file/upload`,data,{ headers: { 'Authorization':  `Bearer ${localStorage.getItem('token')}` }});
   }
   getPhotosByAnncId(id) {
-    return this.http.get(this.host2+`/file/getPhotosByAnncId/${id}`,{ headers: { 'Authorization':  `Bearer ${localStorage.getItem('token')}` }});
+    return this.http.get(this.host2+`/file/getPhotosByAnncId/${id}`);
   }
   
   

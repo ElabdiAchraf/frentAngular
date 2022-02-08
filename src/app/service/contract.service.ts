@@ -17,7 +17,7 @@ export class ContractService {
     return this.http.get(this.host2 + `/immobillierDetails/${id}`, { headers: { 'Authorization':  `Bearer ${localStorage.getItem('token')}` }});
   }
   ImmobilierForSale() {
-    return this.http.get(this.host2 + `/sell_immobiliers`, { headers: { 'Authorization':  `Bearer ${localStorage.getItem('token')}` }});
+    return this.http.get(this.host2 + `/sell_immobiliers`);
   }
   myImmobilier() {
     return this.http.get(this.host2 + `/myImmobiliers`, { headers: { 'Authorization':  `Bearer ${localStorage.getItem('token')}` }});

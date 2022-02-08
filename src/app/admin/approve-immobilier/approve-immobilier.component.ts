@@ -85,14 +85,16 @@ console.log(this.Immobiliers);
         title: 'Immobilier Approved',
         showConfirmButton: false,
         timer: 3000
-      })
+      });
+      this.ngOnInit();
     }, err => {
       console.log(err);
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: 'Something went wrong!',
-      })
+      });
+      this.ngOnInit();
     });
     
   }
