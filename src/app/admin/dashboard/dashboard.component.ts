@@ -1,3 +1,5 @@
+import { PhotoService } from './../../service/photoservice';
+import { ContractService } from 'src/app/service/contract.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Product } from '../../api/product';
@@ -11,10 +13,10 @@ export class DashboardComponent implements OnInit {
     items: MenuItem[];
 
     products: Product[];
-
+    Immobiliers
     chartData:any;
 
-    constructor(private productService: ProductService) {}
+    constructor(private productService: ProductService,private contractService:ContractService,private photoService :PhotoService) {}
 
     ngOnInit() {
          if (!localStorage.getItem('foo')) { 
@@ -23,6 +25,22 @@ export class DashboardComponent implements OnInit {
         } else {
             localStorage.removeItem('foo') 
         }
+
+        this.contractService.Immobiliers().subscribe(res => {
+            this.Immobiliers = res;
+            console.log(res);
+            this.Immobiliers.forEach(Immobilier => {
+                this.photoService.getPhotosByAnncId(Immobilier.id).subscribe((res: any) => {
+                    Immobilier.photos = res;
+                    if (Immobilier.photos.length == 0) {
+                        Immobilier.hasPhotos = false;
+                    } else {
+                        Immobilier.hasPhotos = true;
+                    }
+      
+                });
+            });
+        });
         this.productService.getProductsSmall().then(data => this.products = data);
           
         this.items = [

@@ -19,4 +19,7 @@ export class OrderService {
   DeleteImmobilierOrders(idImmobilier) {
     return this.http.delete(this.host2 + `/DeleteImmobilierOrders/${idImmobilier}`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
   }
+  userOrders(id) {
+    return this.http.get(this.host2 + `/UserOrders/${id}`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+  }
 }

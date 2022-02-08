@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { AuthService } from './../../service/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -47,15 +48,21 @@ export class LoginComponent implements OnInit {
           let jwt = res.headers.get('Authorization');
           this.authService.saveToken(jwt);
           if (localStorage.getItem("Role") != "0") {
-            this.router.navigateByUrl("/user/forsale");
+            this.router.navigateByUrl("/");
             
           } else {
             this.router.navigateByUrl("/admin/dashboard");
             
           }
         });
-      } else {
+      } else if(status == 0){
         this.router.navigateByUrl("/public/approuveAccount");
+      } else {
+        Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      });
      }
     });
     

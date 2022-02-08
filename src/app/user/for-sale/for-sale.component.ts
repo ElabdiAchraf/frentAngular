@@ -7,6 +7,7 @@ import { ContractService } from './../../service/contract.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-for-sale',
@@ -29,7 +30,7 @@ export class ForSaleComponent implements OnInit {
   Value;
   form: FormGroup;
   Buyform: FormGroup;
-  immobilierdetail:immobilierdetail ;
+  immobilierdetail ;
   sortField: string;
   images: any[];
   galleriaResponsiveOptions: any[] = [
@@ -78,7 +79,6 @@ export class ForSaleComponent implements OnInit {
             localStorage.removeItem('foo') 
         }
 
-
     this.contractService.ImmobilierForSale().subscribe((res:any)=>{
       this.Immobiliers = res;
       this.Immobiliers.forEach(Immobilier => {
@@ -112,6 +112,7 @@ export class ForSaleComponent implements OnInit {
     }
   }
   showDetails(id) { 
+    this.details = true
     this.contractService.ImmobilierDetails(id).subscribe((res:any) => {
       this.immobilierdetail = res;
       console.log(this.immobilierdetail)

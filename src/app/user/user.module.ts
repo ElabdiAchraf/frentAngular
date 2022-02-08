@@ -31,6 +31,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MyImmobiliersComponent } from './my-immobiliers/my-immobiliers.component';
 import { AddImmobilierComponent } from './add-immobilier/add-immobilier.component';
 import { ChipModule } from 'primeng/chip';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
 
 
 
@@ -39,7 +40,8 @@ import { ChipModule } from 'primeng/chip';
     ForSaleComponent,
     UserProfileComponent,
     MyImmobiliersComponent,
-    AddImmobilierComponent
+    AddImmobilierComponent,
+    MyOrdersComponent
   ],
   imports: [
     CommonModule,
